@@ -1,5 +1,6 @@
 class Deck {
   Card[] cards = new Card[52];
+  int b = 0;
   public Deck(){
     for (int cardNum = 0; cardNum < 13; cardNum++){
       cards[cardNum] = new Card(pics[cardNum], cardNum + 1, "diamonds");
@@ -19,5 +20,18 @@ class Deck {
       cards[j].goTo(0 + j%11 * 73, j/11 * 96);
       cards[j].show();
     }
+  }
+  public void shuffle(){
+   for (int i = 0; i < cards.length; i++){ 
+     int randint = floor(random(0,52));
+     Card a = cards[i];
+     cards[i] = cards[randint];
+     cards[randint] = a;
+    }
+    b = 0;
+  }
+  public Card passCard(){
+    b++;
+    return cards[b-1];
   }
 }
