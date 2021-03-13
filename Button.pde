@@ -28,4 +28,20 @@ class Button{
       return false;
     }
   }
+  public boolean clicked(){
+    if(mouseOver() && MouseInput.mouseClicked){
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+class CallButton extends Button{
+  public CallButton(){
+    super();
+  }
+  public CallButton(float x, float y){
+    super("Call", x, y);
+  }
 }

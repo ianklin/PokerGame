@@ -2,17 +2,24 @@ class Deck {
   Card[] cards = new Card[52];
   int b = 0;
   public Deck(){
+    int index = 0;
+    //for (int j = 0; j < 13; j++){
+    //  for (int i = 0; i < 4; i ++){
+    //    cards[index] = new Card(pics[index], j + 2, i, index);
+    //    index++;
+    //  }
+    //}
     for (int cardNum = 0; cardNum < 13; cardNum++){
-      cards[cardNum] = new Card(pics[cardNum], cardNum + 1, "diamonds");
+      cards[cardNum] = new Card(pics[cardNum], cardNum + 1, 0, 1);
     }
     for (int cardNum = 0; cardNum < 13; cardNum++){
-      cards[cardNum + 13] = new Card(pics[cardNum + 13], cardNum + 1, "clubs");
+      cards[cardNum + 13] = new Card(pics[cardNum + 13], cardNum + 1, 1, 1);
     }
     for (int cardNum = 0; cardNum < 13; cardNum++){
-      cards[cardNum + 26] = new Card(pics[cardNum + 26], cardNum + 1, "hearts");
+      cards[cardNum + 26] = new Card(pics[cardNum + 26], cardNum + 1, 2, 1);
     }
     for (int cardNum = 0; cardNum < 13; cardNum++){
-      cards[cardNum + 39] = new Card(pics[cardNum + 39], cardNum + 1, "spades");
+      cards[cardNum + 39] = new Card(pics[cardNum + 39], cardNum + 1, 3, 1);
     }
   }
   public void revealDeck(){
@@ -33,5 +40,9 @@ class Deck {
   public Card passCard(){
     b++;
     return cards[b-1];
+  }
+  public void reset(){
+    b = 0;
+    shuffle();
   }
 }

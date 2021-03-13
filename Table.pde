@@ -21,4 +21,7 @@ class GameTable{
       }
     }
   }
+  public void reset(){
+    cardArray = new Card[5]; 
+  }
 }
