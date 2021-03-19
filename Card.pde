@@ -12,6 +12,10 @@ class Card {
     this.number = number;
     this.suit = suit;
     this.value = value;
+    if (number == 1){
+      this.number = 14;
+      this.value += 52;
+    }
   }
   public void show(){
     image(sprite, x, y);

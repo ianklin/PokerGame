@@ -2,6 +2,8 @@ class Hand {
   Card[] cards = new Card[2];
   float x = 0;
   float y = 0;
+  int value = 0;
+  Card[] mergedCards = new Card[7];
   public Hand(){
   }
   public void getCards(Card c, Card d){
@@ -18,4 +20,36 @@ class Hand {
     cards[1].goTo(x+73, y);
     cards[1].show();
   }
+  public void mergeCards(Card[] a){
+    for (int i = 0; i < 5; i++){
+      mergedCards[i] = a[i];
+    }
+    mergedCards[5] = cards[0];
+    mergedCards[6] = cards[1];
+  }
+  public void sortCards(){
+    for (int i = 0; i < 7 - 1; i++){
+      for (int j = 0; j < 7 - i - 1; j++){
+        if (mergedCards[j].value > mergedCards[j + 1].value){
+          Card a = mergedCards[j];
+          mergedCards[j] = mergedCards[j + 1];
+          mergedCards[j + 1] = a;
+        }
+      }
+    }
+  }
+  public void determineHighest(){
+    value = mergedCards[6].value;
+  }
+//Determining the Value of your hand
+//RoyalFlush         1000000000 + value of all cards + the suit
+//StraightFlush      1000000000 + value of all cards + the suit
+//Four of a kind     100000000 + value of the fours and the high card
+//FullHouse          10000000 + value of the triple and the pair
+//Flush              1000000 + value highest card in the combo
+//Straight           100000 + value of the high card
+//Three of a Kind    10000 + value of the triple and the high card
+//Two Pair           1000 + value of the higher pair
+//Pair               100 + value of each card
+//High Card          4-56
 }

@@ -41,6 +41,7 @@ void setup(){
   }
   a = new Deck();
   a.shuffle();
+  //a.revealDeck();
   player1 = new Hand();
   CPU1 = new Hand();
   CPU2 = new Hand();

@@ -9,17 +9,25 @@ class Deck {
     //    index++;
     //  }
     //}
+    int value = 0;
     for (int cardNum = 0; cardNum < 13; cardNum++){
-      cards[cardNum] = new Card(pics[cardNum], cardNum + 1, 0, 1);
+      cards[cardNum] = new Card(pics[cardNum], cardNum + 1, 0, value);
+      value+=4;
     }
+    value = 1;
     for (int cardNum = 0; cardNum < 13; cardNum++){
-      cards[cardNum + 13] = new Card(pics[cardNum + 13], cardNum + 1, 1, 1);
+      cards[cardNum + 13] = new Card(pics[cardNum + 13], cardNum + 1, 1, value);
+      value+=4;
     }
+    value = 2;
     for (int cardNum = 0; cardNum < 13; cardNum++){
-      cards[cardNum + 26] = new Card(pics[cardNum + 26], cardNum + 1, 2, 1);
+      cards[cardNum + 26] = new Card(pics[cardNum + 26], cardNum + 1, 2, value);
+      value+=4;
     }
+    value = 3;
     for (int cardNum = 0; cardNum < 13; cardNum++){
-      cards[cardNum + 39] = new Card(pics[cardNum + 39], cardNum + 1, 3, 1);
+      cards[cardNum + 39] = new Card(pics[cardNum + 39], cardNum + 1, 3, value);
+      value+=4;
     }
   }
   public void revealDeck(){
