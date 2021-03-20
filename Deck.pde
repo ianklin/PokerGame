@@ -2,7 +2,7 @@ class Deck {
   Card[] cards = new Card[52];
   int b = 0;
   public Deck(){
-    int index = 0;
+    //int index = 0;
     //for (int j = 0; j < 13; j++){
     //  for (int i = 0; i < 4; i ++){
     //    cards[index] = new Card(pics[index], j + 2, i, index);

@@ -41,6 +41,15 @@ class Hand {
   public void determineHighest(){
     value = mergedCards[6].value;
   }
+  public void determineHandValue(){
+    for (int i = 0; i < 7; i++){
+      for (int j = 0; j < 7; j++){ 
+        if(mergedCards[i].number == mergedCards[j].number){
+          value = 100 + mergedCards[i].value + mergedCards[j].value;
+        }
+      }
+    }
+  }
 //Determining the Value of your hand
 //RoyalFlush         1000000000 + value of all cards + the suit
 //StraightFlush      1000000000 + value of all cards + the suit
