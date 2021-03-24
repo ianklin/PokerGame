@@ -43,9 +43,17 @@ class Hand {
   }
   public void determineHandValue(){
     for (int i = 0; i < 7; i++){
-      for (int j = 0; j < 7; j++){ 
+      for (int j = i + 1; j < 7; j++){
         if(mergedCards[i].number == mergedCards[j].number){
-          value = 100 + mergedCards[i].value + mergedCards[j].value;
+          //for (int a = 0; a < 7; a++){
+          //  for (int b = a + 1; b < 7; b++) {
+          //    if (mergedCards[a].number == mergedCards[b].number && mergedCards[a].number != mergedCards[i].number){
+          //      value = 1000 + mergedCards[a].value;
+          //    } else {
+                value = 100 + mergedCards[i].value + mergedCards[j].value;
+          //    }
+          //  }
+          //}
         }
       }
     }

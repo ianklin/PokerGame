@@ -70,7 +70,7 @@ public void mouseCheck(){
 }
 
 void draw(){
-  background(0);
+  //background(0);
   mouseCheck();
   switch(currentState){
     case PASSCARDS:
@@ -98,16 +98,16 @@ void draw(){
       currentState = GameStates.OPTIONS;
       break; 
     case RESULTS:
-      //player1.mergeCards(table.cardArray);
-      //player1.sortCards();
-      //for (int k = 0; k < 7; k++){
-      //  player1.mergedCards[k].goTo(0 + k*70,600);
-      //  player1.mergedCards[k].show();
-      //}
-      //player1.determineHighest();
-      //text(player1.value, 250, 200);
-      //player1.determineHandValue();
-      //text(player1.value, 200, 200);
+      player1.mergeCards(table.cardArray);
+      player1.sortCards();
+      for (int k = 0; k < 7; k++){
+        player1.mergedCards[k].goTo(0 + k*70,600);
+        player1.mergedCards[k].show();
+      }
+      player1.determineHighest();
+      text(player1.value, 250, 200);
+      player1.determineHandValue();
+      text(player1.value, 200, 200);
       replay.show();
       if (replay.clicked()){
         currentState = GameStates.PASSCARDS;
