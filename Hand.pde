@@ -41,21 +41,63 @@ class Hand {
   public void determineHighest(){
     value = mergedCards[6].value;
   }
-  public void determineHandValue(){
-    for (int i = 0; i < 7; i++){
-      for (int j = i + 1; j < 7; j++){
-        if(mergedCards[i].number == mergedCards[j].number){
-          //for (int a = 0; a < 7; a++){
-          //  for (int b = a + 1; b < 7; b++) {
-          //    if (mergedCards[a].number == mergedCards[b].number && mergedCards[a].number != mergedCards[i].number){
-          //      value = 1000 + mergedCards[a].value;
-          //    } else {
-                value = 100 + mergedCards[i].value + mergedCards[j].value;
-          //    }
-          //  }
-          //}
+  public boolean determinePair(){
+    for (int i = 0; i < 6; i++){
+      if(mergedCards[i].number == mergedCards[i + 1].number){
+        value = 100 + mergedCards[i].value + mergedCards[i + 1].value;
+        return true;
+      } 
+    }
+    return false;
+  }
+  public boolean determineDoublePair(){
+    int pairCount = 0;
+    int highest = 0;
+    for (int a = 0; a < 6; a++){
+      if (mergedCards[a].number == mergedCards[a + 1].number){
+        pairCount++;
+        if (mergedCards[a+1].value > highest){
+          highest = mergedCards[a+1].value;
         }
       }
+    } 
+    if (pairCount >= 2){
+      value = 1000 + highest;
+      return true;
+    } else {
+      return false;
+    }
+  }
+  public boolean determineThreeOfKind(){
+    for (int b = 0; b < 5; b++){
+      if (mergedCards[b].number == mergedCards[b + 1].number && mergedCards[b].number == mergedCards[b + 2].number){
+        if (b <= 4){
+          for (int c = b + 3; c < 5; c++){
+            if (mergedCards[c].number == mergedCards[c + 1].number && mergedCards[c].number == mergedCards[c + 2].number){
+              value = 10000 + mergedCards[c + 2].value;
+              return true;
+            } 
+          }
+          value = 10000 + mergedCards[b + 2].value;
+          return true;
+        } else {
+          value = 10000 + mergedCards[b + 2].value;
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  public int determineValue(){
+    if (determineThreeOfKind()){
+      return value;
+    } else if (determineDoublePair()){
+      return value;
+    } else if (determinePair()){
+      return value;
+    } else {
+      determineHighest();
+      return value;
     }
   }
 //Determining the Value of your hand
