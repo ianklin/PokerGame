@@ -122,9 +122,58 @@ class Hand {
     }
     return false;
   }
-  
+  public boolean findFlush(){
+    int diaCount = 0;
+    int clubCount = 0;
+    int heartCount = 0;
+    int spadeCount = 0;
+    int diaHighest = 0;
+    int clubHighest = 0;
+    int heartHighest = 0;
+    int spadeHighest = 0;
+    for(int z = 0; z < 7; z++){
+      if(mergedCards[z].suit == 0){
+        diaCount++;
+        if (mergedCards[z].value < diaHighest){
+          diaHighest = mergedCards[z].value;
+        }
+      } else if (mergedCards[z].suit == 1){
+        clubCount++;
+        if (mergedCards[z].value < clubHighest){
+          clubHighest = mergedCards[z].value;
+        }
+      } else if (mergedCards[z].suit == 2){
+        heartCount++;
+        if (mergedCards[z].value < heartHighest){
+          heartHighest = mergedCards[z].value;
+        }
+      } else {
+        spadeCount++;
+        if (mergedCards[z].value < spadeHighest){
+          spadeHighest = mergedCards[z].value;
+        }
+      }
+    }
+    if (spadeCount >= 5){
+      value = 1000000 + spadeHighest;
+      return true;
+    } else if (heartCount >= 5){
+      value = 1000000 + heartHighest;
+      return true;
+    } else if (clubCount >= 5){
+      value = 1000000 + clubHighest;
+      return true;
+    } else if (diaCount >= 5){
+      value = 1000000 + diaHighest;
+      return true;
+    } else {
+      return false;
+    }
+  }
   public int determineValue(){
-    if (straight()){
+    if (findFlush()){
+      return value;
+    } else if (straight()){
       return value;
     } else if (threeOfKind()){
       return value;
