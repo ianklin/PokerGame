@@ -41,7 +41,7 @@ class Hand {
   public void determineHighest(){
     value = mergedCards[6].value;
   }
-  public boolean determinePair(){
+  public boolean pair(){
     for (int i = 0; i < 6; i++){
       if(mergedCards[i].number == mergedCards[i + 1].number){
         value = 100 + mergedCards[i].value + mergedCards[i + 1].value;
@@ -50,7 +50,7 @@ class Hand {
     }
     return false;
   }
-  public boolean determineDoublePair(){
+  public boolean doublePair(){
     int pairCount = 0;
     int highest = 0;
     for (int a = 0; a < 6; a++){
@@ -68,7 +68,7 @@ class Hand {
       return false;
     }
   }
-  public boolean determineThreeOfKind(){
+  public boolean threeOfKind(){
     for (int b = 0; b < 5; b++){
       if (mergedCards[b].number == mergedCards[b + 1].number && mergedCards[b].number == mergedCards[b + 2].number){
         if (b <= 4){
@@ -88,12 +88,49 @@ class Hand {
     }
     return false;
   }
+  
+  //Don't forget to check three of a kind ties.
+  
+  public boolean straight(){
+    Card[] modifiedCardList = new Card[7];
+    int f = 0;
+    for(int e = 0; e < 6; e++){
+      if (mergedCards[e].number == mergedCards[e + 1].number){
+        modifiedCardList[f] = mergedCards[e + 1];
+        e++;
+      } else {
+        modifiedCardList[f] = mergedCards[e];
+      }
+      f++;
+    }
+    for(int d = 0; d < 2; d++){
+      if (modifiedCardList[d].number + 1 == modifiedCardList[d+1].number && modifiedCardList[d+1].number + 1 == modifiedCardList[d+2].number && modifiedCardList[d+2].number + 1 == modifiedCardList[d+3].number && modifiedCardList[d+3].number + 1 == modifiedCardList[d+4].number){
+        if (d <= 2) {
+          for(int g = 0; g < 2; g++){
+            if (modifiedCardList[g].number + 1 == modifiedCardList[g+1].number && modifiedCardList[g+1].number + 1 == modifiedCardList[g+2].number && modifiedCardList[g+2].number + 1 == modifiedCardList[g+3].number && modifiedCardList[g+3].number + 1 == modifiedCardList[g+4].number){ 
+              value = 100000 + modifiedCardList[g+4].value;
+              return true;
+            }
+          }
+          value = 100000 + modifiedCardList[d+4].value;
+          return true;
+        } else {
+          value = 100000 + modifiedCardList[d+4].value;
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  
   public int determineValue(){
-    if (determineThreeOfKind()){
+    if (straight()){
       return value;
-    } else if (determineDoublePair()){
+    } else if (threeOfKind()){
       return value;
-    } else if (determinePair()){
+    } else if (doublePair()){
+      return value;
+    } else if (pair()){
       return value;
     } else {
       determineHighest();
