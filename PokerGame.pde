@@ -40,7 +40,7 @@ void setup(){
     pics[i+39] = spade.get(1 + i * 73, 0, 73, 96);
   }
   a = new Deck();
-  a.shuffle();
+  //a.shuffle();
   //a.revealDeck();
   player1 = new Hand();
   CPU1 = new Hand();

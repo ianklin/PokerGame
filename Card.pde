@@ -6,6 +6,9 @@ class Card {
   float x = 0;
   float y = 0;
   public Card(){
+    number = 0;
+    suit = -1;
+    value = 0;
   }
   public Card(PImage sprite, int number, int suit, int value) {
     this.sprite = sprite;

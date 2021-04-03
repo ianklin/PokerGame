@@ -92,16 +92,33 @@ class Hand {
   //Don't forget to check three of a kind ties.
   
   public boolean straight(){
-    Card[] modifiedCardList = new Card[7];
+    Card[] modifiedCardList = new Card[11];
     int f = 0;
+    for(int j = 0; j < 11; j++){
+      modifiedCardList[j] = new Card();
+    }
+    for(int ace = 0; ace < 7; ace++){
+      if(mergedCards[ace].number == 14){
+        modifiedCardList[f] = new Card(pics[0], 1, mergedCards[ace].suit, 0);
+      }
+    }
     for(int e = 0; e < 6; e++){
       if (mergedCards[e].number == mergedCards[e + 1].number){
-        modifiedCardList[f] = mergedCards[e + 1];
-        e++;
+        if (mergedCards[e].number == mergedCards[e + 2].number){
+          modifiedCardList[f] = mergedCards[e + 2];
+          e += 2;
+        } else {
+          modifiedCardList[f] = mergedCards[e + 1];
+          e++;
+        }
       } else {
         modifiedCardList[f] = mergedCards[e];
       }
       f++;
+    }
+    modifiedCardList[f] = mergedCards[6];
+    for(int print = 0; print < 11; print++){
+      println(modifiedCardList[print].number);
     }
     for(int d = 0; d < 2; d++){
       if (modifiedCardList[d].number + 1 == modifiedCardList[d+1].number && modifiedCardList[d+1].number + 1 == modifiedCardList[d+2].number && modifiedCardList[d+2].number + 1 == modifiedCardList[d+3].number && modifiedCardList[d+3].number + 1 == modifiedCardList[d+4].number){
@@ -134,22 +151,22 @@ class Hand {
     for(int z = 0; z < 7; z++){
       if(mergedCards[z].suit == 0){
         diaCount++;
-        if (mergedCards[z].value < diaHighest){
+        if (mergedCards[z].value > diaHighest){
           diaHighest = mergedCards[z].value;
         }
       } else if (mergedCards[z].suit == 1){
         clubCount++;
-        if (mergedCards[z].value < clubHighest){
+        if (mergedCards[z].value > clubHighest){
           clubHighest = mergedCards[z].value;
         }
       } else if (mergedCards[z].suit == 2){
         heartCount++;
-        if (mergedCards[z].value < heartHighest){
+        if (mergedCards[z].value > heartHighest){
           heartHighest = mergedCards[z].value;
         }
       } else {
         spadeCount++;
-        if (mergedCards[z].value < spadeHighest){
+        if (mergedCards[z].value > spadeHighest){
           spadeHighest = mergedCards[z].value;
         }
       }
@@ -170,8 +187,45 @@ class Hand {
       return false;
     }
   }
+  public boolean fullHouse(){
+    int tripleValue = 0;
+    Card[] fullHouseList = mergedCards;
+    if (threeOfKind()){
+      for (int b = 0; b < 5; b++){
+        if (fullHouseList[b].number == fullHouseList[b + 1].number && fullHouseList[b].number == fullHouseList[b + 2].number){
+          if (b <= 4){
+            for (int c = b + 3; c < 5; c++){
+              if (fullHouseList[c].number == fullHouseList[c + 1].number && fullHouseList[c].number == fullHouseList[c + 2].number){
+                tripleValue += fullHouseList[c].value;
+                tripleValue += fullHouseList[c + 1].value;
+                tripleValue += fullHouseList[c + 2].value;
+                fullHouseList[c] = new Card();
+                fullHouseList[c + 1] = new Card();
+                fullHouseList[c + 2] = new Card();
+              } 
+            }
+          } else {
+            tripleValue += fullHouseList[b].value;            
+            tripleValue += fullHouseList[b + 1].value;
+            tripleValue += fullHouseList[b + 2].value;
+            fullHouseList[b] = new Card();
+            fullHouseList[b + 1] = new Card();
+            fullHouseList[b + 2] = new Card();
+          }
+        }
+      }
+      for(int pair = 0; pair < fullHouseList.length - 1; pair++){
+        if(fullHouseList[pair].number == fullHouseList[pair + 1].number) {
+          value = 10000000 + tripleValue + fullHouseList[pair].value + fullHouseList[pair + 1].value;
+        }
+      }
+    }
+    return false;
+  }
   public int determineValue(){
-    if (findFlush()){
+    if (fullHouse()){
+      return value;
+    } else if (findFlush()){
       return value;
     } else if (straight()){
       return value;
