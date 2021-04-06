@@ -40,7 +40,7 @@ void setup(){
     pics[i+39] = spade.get(1 + i * 73, 0, 73, 96);
   }
   a = new Deck();
-  //a.shuffle();
+  a.shuffle();
   //a.revealDeck();
   player1 = new Hand();
   CPU1 = new Hand();
@@ -77,8 +77,8 @@ void draw(){
       a.reset();
       stateNum = 0;
       table.reset();
-      Card card1 = a.passCard();
-      Card card2 = a.passCard();
+      Card card1 = new Card(pics[1], 2, 0, 4);
+      Card card2 = new Card(pics[14], 2, 1, 5);
       player1.getCards(card1, card2);
       CPU1.getCards(a.passCard(), a.passCard());
       CPU2.getCards(a.passCard(), a.passCard());
@@ -87,6 +87,10 @@ void draw(){
       break;
     case FLOP:
       table.flop(a.passCard(), a.passCard(), a.passCard());
+      //Card card3 = new Card(pics[2], 3, 0, 8);
+      //Card card4 = new Card(pics[15], 3, 1, 9);
+      //Card card5 = new Card(pics[28], 3, 2, 10);
+      //table.flop(card3, card4, card5);
       currentState = GameStates.OPTIONS;
       break;
     case TURN:

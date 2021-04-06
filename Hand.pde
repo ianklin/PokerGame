@@ -100,9 +100,10 @@ class Hand {
     for(int ace = 0; ace < 7; ace++){
       if(mergedCards[ace].number == 14){
         modifiedCardList[f] = new Card(pics[0], 1, mergedCards[ace].suit, 0);
+        f++;
       }
     }
-    for(int e = 0; e < 6; e++){
+    for(int e = 0; e < 5; e++){
       if (mergedCards[e].number == mergedCards[e + 1].number){
         if (mergedCards[e].number == mergedCards[e + 2].number){
           modifiedCardList[f] = mergedCards[e + 2];
@@ -117,9 +118,9 @@ class Hand {
       f++;
     }
     modifiedCardList[f] = mergedCards[6];
-    for(int print = 0; print < 11; print++){
-      println(modifiedCardList[print].number);
-    }
+    //for(int print = 0; print < 11; print++){
+    //  println(modifiedCardList[print].number);
+    //}
     for(int d = 0; d < 2; d++){
       if (modifiedCardList[d].number + 1 == modifiedCardList[d+1].number && modifiedCardList[d+1].number + 1 == modifiedCardList[d+2].number && modifiedCardList[d+2].number + 1 == modifiedCardList[d+3].number && modifiedCardList[d+3].number + 1 == modifiedCardList[d+4].number){
         if (d <= 2) {
@@ -190,6 +191,9 @@ class Hand {
   public boolean fullHouse(){
     int tripleValue = 0;
     Card[] fullHouseList = mergedCards;
+    for(int print = 0; print < 7; print++){
+      println(fullHouseList[print].number);
+    }
     if (threeOfKind()){
       for (int b = 0; b < 5; b++){
         if (fullHouseList[b].number == fullHouseList[b + 1].number && fullHouseList[b].number == fullHouseList[b + 2].number){
