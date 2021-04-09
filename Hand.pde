@@ -190,37 +190,61 @@ class Hand {
   }
   public boolean fullHouse(){
     int tripleValue = 0;
-    Card[] fullHouseList = mergedCards;
-    for(int print = 0; print < 7; print++){
-      println(fullHouseList[print].number);
-    }
+    Card[] fullHouseList = mergedCards.clone();
+    //for(int print = 0; print < 7; print++){
+    //  println(fullHouseList[print].number);
+    //}
     if (threeOfKind()){
+      println("threeOfKind");
       for (int b = 0; b < 5; b++){
+        println(b);
         if (fullHouseList[b].number == fullHouseList[b + 1].number && fullHouseList[b].number == fullHouseList[b + 2].number){
           if (b <= 4){
             for (int c = b + 3; c < 5; c++){
+              println(c);
               if (fullHouseList[c].number == fullHouseList[c + 1].number && fullHouseList[c].number == fullHouseList[c + 2].number){
                 tripleValue += fullHouseList[c].value;
                 tripleValue += fullHouseList[c + 1].value;
                 tripleValue += fullHouseList[c + 2].value;
+                println("triple");
+                println(tripleValue);
                 fullHouseList[c] = new Card();
                 fullHouseList[c + 1] = new Card();
                 fullHouseList[c + 2] = new Card();
+                for(int pair = 0; pair < fullHouseList.length - 1; pair++){
+                  if(fullHouseList[pair].number == fullHouseList[pair + 1].number) {
+                    value = 10000000 + tripleValue + fullHouseList[pair].value + fullHouseList[pair + 1].value;
+                    return true;
+                  }
+                }
               } 
             }
+            tripleValue += fullHouseList[b].value;            
+            tripleValue += fullHouseList[b + 1].value;
+            tripleValue += fullHouseList[b + 2].value;
+            println("triple");
+            println(tripleValue);
+            fullHouseList[b] = new Card();
+            fullHouseList[b + 1] = new Card();
+            fullHouseList[b + 2] = new Card();
+            break;
           } else {
             tripleValue += fullHouseList[b].value;            
             tripleValue += fullHouseList[b + 1].value;
             tripleValue += fullHouseList[b + 2].value;
+            println("triple");
+            println(tripleValue);
             fullHouseList[b] = new Card();
             fullHouseList[b + 1] = new Card();
             fullHouseList[b + 2] = new Card();
+            break;
           }
         }
       }
       for(int pair = 0; pair < fullHouseList.length - 1; pair++){
         if(fullHouseList[pair].number == fullHouseList[pair + 1].number) {
           value = 10000000 + tripleValue + fullHouseList[pair].value + fullHouseList[pair + 1].value;
+          return true;
         }
       }
     }

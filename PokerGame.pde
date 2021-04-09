@@ -87,10 +87,10 @@ void draw(){
       break;
     case FLOP:
       table.flop(a.passCard(), a.passCard(), a.passCard());
-      //Card card3 = new Card(pics[2], 3, 0, 8);
-      //Card card4 = new Card(pics[15], 3, 1, 9);
-      //Card card5 = new Card(pics[28], 3, 2, 10);
-      //table.flop(card3, card4, card5);
+      Card card3 = new Card(pics[2], 3, 0, 8);
+      Card card4 = new Card(pics[15], 3, 1, 9);
+      Card card5 = new Card(pics[28], 3, 2, 10);
+      table.flop(card3, card4, card5);
       currentState = GameStates.OPTIONS;
       break;
     case TURN:
