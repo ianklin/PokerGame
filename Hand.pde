@@ -250,8 +250,36 @@ class Hand {
     }
     return false;
   }
+  public boolean fourOfAKind(){
+    value = 0;
+    Card[] mergedCards1 = mergedCards.clone();
+    int highest = 0;
+    for(int a = 0; a < 3; a++){
+      if(mergedCards1[a].number == mergedCards1[a + 1].number && mergedCards1[a + 1].number == mergedCards1[a + 2].number && mergedCards1[a + 2].number == mergedCards1[a + 3].number){
+        value += mergedCards1[a].value;
+        value += mergedCards1[a + 1].value;
+        value += mergedCards1[a + 2].value;
+        value += mergedCards1[a + 3].value;
+        mergedCards1[a] = new Card();
+        mergedCards1[a + 1] = new Card();
+        mergedCards1[a + 2] = new Card();
+        mergedCards1[a + 3] = new Card();
+        for(int b = 0; b < 7; b++){
+          if(mergedCards1[a].value > highest){
+            highest = mergedCards1[a].value;
+          }
+        }
+        value += 100000000;
+        value += highest;
+        return true;
+      }
+    }
+    return false;
+  }
   public int determineValue(){
-    if (fullHouse()){
+    if (fourOfAKind()){
+      return value;
+    } else if (fullHouse()){
       return value;
     } else if (findFlush()){
       return value;

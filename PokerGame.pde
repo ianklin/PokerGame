@@ -78,7 +78,7 @@ void draw(){
       stateNum = 0;
       table.reset();
       Card card1 = new Card(pics[1], 2, 0, 4);
-      Card card2 = new Card(pics[14], 2, 1, 5);
+      Card card2 = new Card(pics[41], 3, 3, 11);
       player1.getCards(card1, card2);
       CPU1.getCards(a.passCard(), a.passCard());
       CPU2.getCards(a.passCard(), a.passCard());
