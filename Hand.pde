@@ -265,8 +265,8 @@ class Hand {
         mergedCards1[a + 2] = new Card();
         mergedCards1[a + 3] = new Card();
         for(int b = 0; b < 7; b++){
-          if(mergedCards1[a].value > highest){
-            highest = mergedCards1[a].value;
+          if(mergedCards1[b].value > highest){
+            highest = mergedCards1[b].value;
           }
         }
         value += 100000000;
@@ -276,8 +276,155 @@ class Hand {
     }
     return false;
   }
+  //public boolean straightFlush(){
+    //Card[] straight = new Card[7];
+    //boolean something = false;
+    //Card[] modifiedCardList = new Card[11];
+    //int f = 0;
+    //for(int j = 0; j < 11; j++){
+    //  modifiedCardList[j] = new Card();
+    //}
+    //for(int ace = 0; ace < 7; ace++){
+    //  if(mergedCards[ace].number == 14){
+    //    modifiedCardList[f] = new Card(pics[0], 1, mergedCards[ace].suit, 0);
+    //    f++;
+    //  }
+    //}
+    //for(int e = 0; e < 5; e++){
+    //  if (mergedCards[e].number == mergedCards[e + 1].number){
+    //    if (mergedCards[e].number == mergedCards[e + 2].number){
+    //      modifiedCardList[f] = mergedCards[e + 2];
+    //      e += 2;
+    //    } else {
+    //      modifiedCardList[f] = mergedCards[e + 1];
+    //      e++;
+    //    }
+    //  } else {
+    //    modifiedCardList[f] = mergedCards[e];
+    //  }
+    //  f++;
+    //}
+    //modifiedCardList[f] = mergedCards[6];
+    //for(int d = 0; d < 2; d++){
+    //  if (modifiedCardList[d].number + 1 == modifiedCardList[d+1].number && modifiedCardList[d+1].number + 1 == modifiedCardList[d+2].number && modifiedCardList[d+2].number + 1 == modifiedCardList[d+3].number && modifiedCardList[d+3].number + 1 == modifiedCardList[d+4].number){
+    //    if (d <= 2) {
+    //      for(int g = 0; g < 2; g++){
+    //        if (modifiedCardList[g].number + 1 == modifiedCardList[g+1].number && modifiedCardList[g+1].number + 1 == modifiedCardList[g+2].number && modifiedCardList[g+2].number + 1 == modifiedCardList[g+3].number && modifiedCardList[g+3].number + 1 == modifiedCardList[g+4].number){ 
+    //          something = true;
+    //          straight[0] = modifiedCardList[g];
+    //          straight[1] = modifiedCardList[g + 1];
+    //          straight[2] = modifiedCardList[g + 2];
+    //          straight[3] = modifiedCardList[g + 3];
+    //          straight[4] = modifiedCardList[g + 4];
+    //        }
+    //      }
+    //      something = true;
+    //      straight[0] = modifiedCardList[d];
+    //      straight[1] = modifiedCardList[d + 1];
+    //      straight[2] = modifiedCardList[d + 2];
+    //      straight[3] = modifiedCardList[d + 3];
+    //      straight[4] = modifiedCardList[d + 4];
+    //    } else {
+    //      something = true;
+    //      straight[0] = modifiedCardList[d];
+    //      straight[1] = modifiedCardList[d + 1];
+    //      straight[2] = modifiedCardList[d + 2];
+    //      straight[3] = modifiedCardList[d + 3];
+    //      straight[4] = modifiedCardList[d + 4];
+    //    }
+    //  }
+    //}
+    //if(something && straight[0].suit == straight[1].suit && straight[1].suit == straight[2].suit && straight[2].suit == straight[3].suit && straight[3].suit == straight[4].suit){
+    //  value += 1000000000;
+    //  value += straight[0].value;
+    //  value += straight[1].value;
+    //  value += straight[2].value;
+    //  value += straight[3].value;
+    //  value += straight[4].value;
+    //  return true;
+    //}
+    //return false;
+  //}
+  public boolean straightFlush(){
+    Card[] flush = new Card[7];
+    int index = 0;
+    for(int i = 0; i < 7; i++){
+      flush[i] = new Card();
+    }
+    int diaCount = 0;
+    int clubCount = 0;
+    int heartCount = 0;
+    int spadeCount = 0;
+    for(int z = 0; z < 7; z++){
+      if(mergedCards[z].suit == 0){
+        diaCount++;
+      } else if (mergedCards[z].suit == 1){
+        clubCount++;
+      } else if (mergedCards[z].suit == 2){
+        heartCount++;
+      } else {
+        spadeCount++;
+      }
+    }
+    if (spadeCount >= 5){
+      for(int a = 0; a < 7; a++){
+        if(mergedCards[a].suit == 3){
+          flush[index] = mergedCards[a];
+          index++;
+        }
+      }
+    } else if (heartCount >= 5){
+      for(int a = 0; a < 7; a++){
+        if(mergedCards[a].suit == 2){
+          flush[index] = mergedCards[a];
+          index++;
+        }
+      }
+    } else if (clubCount >= 5){
+      for(int a = 0; a < 7; a++){
+        if(mergedCards[a].suit == 1){
+          flush[index] = mergedCards[a];
+          index++;
+        }
+      }
+    } else if (diaCount >= 5){
+      for(int a = 0; a < 7; a++){
+        if(mergedCards[a].suit == 0){
+          flush[index] = mergedCards[a];
+          index++;
+        }
+      }
+    } else {
+      return false;
+    }
+    for(int ace = 0; ace < 7; ace++){
+      if(flush[ace].number == 14){
+        flush[f] = new Card(pics[0], 1, flush[ace].suit, 0);
+        f++;
+      }
+    for(int d = 0; d < 2; d++){
+      if (flush[d].number + 1 == flush[d+1].number && flush[d+1].number + 1 == flush[d+2].number && flush[d+2].number + 1 == flush[d+3].number && flush[d+3].number + 1 == flush[d+4].number){
+        if (d <= 2) {
+          for(int g = 0; g < 2; g++){
+            if (flush[g].number + 1 == flush[g+1].number && flush[g+1].number + 1 == flush[g+2].number && flush[g+2].number + 1 == flush[g+3].number && flush[g+3].number + 1 == flush[g+4].number){ 
+              value = 1000000000 + flush[g].value + flush[g+1].value + flush[g+2].value + flush[g+3].value + flush[g+4].value;
+              return true;
+            }
+          }
+          value = 1000000000 + flush[d].value + flush[d+1].value + flush[d+2].value + flush[d+3].value + flush[d+4].value;
+          return true;
+        } else {
+          value = 1000000000 + flush[d].value + flush[d+1].value + flush[d+2].value + flush[d+3].value + flush[d+4].value;
+          return true;
+        }
+      }
+    }
+    return false;
+  }
   public int determineValue(){
-    if (fourOfAKind()){
+    if (straightFlush()){
+      return value;
+    } else if (fourOfAKind()){
       return value;
     } else if (fullHouse()){
       return value;
