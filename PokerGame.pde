@@ -77,8 +77,8 @@ void draw(){
       a.reset();
       stateNum = 0;
       table.reset();
-      Card card1 = new Card(pics[1], 2, 0, 4);
-      Card card2 = new Card(pics[2], 3, 0, 8);
+      Card card1 = new Card(pics[0], 1, 0, 52);
+      Card card2 = new Card(pics[1], 2, 0, 4);
       player1.getCards(card1, card2);
       CPU1.getCards(a.passCard(), a.passCard());
       CPU2.getCards(a.passCard(), a.passCard());
@@ -87,9 +87,9 @@ void draw(){
       break;
     case FLOP:
       table.flop(a.passCard(), a.passCard(), a.passCard());
-      Card card3 = new Card(pics[3], 4, 0, 12);
-      Card card4 = new Card(pics[4], 5, 0, 16);
-      Card card5 = new Card(pics[5], 6, 0, 20);
+      Card card3 = new Card(pics[2], 3, 0, 8);
+      Card card4 = new Card(pics[3], 4, 0, 12);
+      Card card5 = new Card(pics[4], 5, 0, 16);
       table.flop(card3, card4, card5);
       currentState = GameStates.OPTIONS;
       break;

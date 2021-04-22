@@ -346,9 +346,9 @@ class Hand {
     //return false;
   //}
   public boolean straightFlush(){
-    Card[] flush = new Card[7];
+    Card[] flush = new Card[11];
     int index = 0;
-    for(int i = 0; i < 7; i++){
+    for(int i = 0; i < 11; i++){
       flush[i] = new Card();
     }
     int diaCount = 0;
@@ -397,11 +397,16 @@ class Hand {
     } else {
       return false;
     }
+    
     for(int ace = 0; ace < 7; ace++){
       if(flush[ace].number == 14){
-        flush[f] = new Card(pics[0], 1, flush[ace].suit, 0);
-        f++;
+        flush[0] = new Card(pics[0], 1, flush[ace].suit, 0);
+        for(int t = 0; t < 10; t++){
+          flush[11-t-1] = flush[11-t]; 
+        }
       }
+    }
+    
     for(int d = 0; d < 2; d++){
       if (flush[d].number + 1 == flush[d+1].number && flush[d+1].number + 1 == flush[d+2].number && flush[d+2].number + 1 == flush[d+3].number && flush[d+3].number + 1 == flush[d+4].number){
         if (d <= 2) {
