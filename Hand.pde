@@ -56,9 +56,7 @@ class Hand {
     for (int a = 0; a < 6; a++){
       if (mergedCards[a].number == mergedCards[a + 1].number){
         pairCount++;
-        if (mergedCards[a+1].value > highest){
-          highest = mergedCards[a+1].value;
-        }
+        highest += mergedCards[a].value + mergedCards[a + 1].value;
       }
     } 
     if (pairCount >= 2){
@@ -195,19 +193,14 @@ class Hand {
     //  println(fullHouseList[print].number);
     //}
     if (threeOfKind()){
-      println("threeOfKind");
       for (int b = 0; b < 5; b++){
-        println(b);
         if (fullHouseList[b].number == fullHouseList[b + 1].number && fullHouseList[b].number == fullHouseList[b + 2].number){
           if (b <= 4){
             for (int c = b + 3; c < 5; c++){
-              println(c);
               if (fullHouseList[c].number == fullHouseList[c + 1].number && fullHouseList[c].number == fullHouseList[c + 2].number){
                 tripleValue += fullHouseList[c].value;
                 tripleValue += fullHouseList[c + 1].value;
                 tripleValue += fullHouseList[c + 2].value;
-                println("triple");
-                println(tripleValue);
                 fullHouseList[c] = new Card();
                 fullHouseList[c + 1] = new Card();
                 fullHouseList[c + 2] = new Card();
@@ -222,8 +215,6 @@ class Hand {
             tripleValue += fullHouseList[b].value;            
             tripleValue += fullHouseList[b + 1].value;
             tripleValue += fullHouseList[b + 2].value;
-            println("triple");
-            println(tripleValue);
             fullHouseList[b] = new Card();
             fullHouseList[b + 1] = new Card();
             fullHouseList[b + 2] = new Card();
@@ -232,8 +223,6 @@ class Hand {
             tripleValue += fullHouseList[b].value;            
             tripleValue += fullHouseList[b + 1].value;
             tripleValue += fullHouseList[b + 2].value;
-            println("triple");
-            println(tripleValue);
             fullHouseList[b] = new Card();
             fullHouseList[b + 1] = new Card();
             fullHouseList[b + 2] = new Card();
@@ -348,7 +337,7 @@ class Hand {
   public boolean straightFlush(){
     Card[] flush = new Card[11];
     int index = 0;
-    for(int i = 0; i < 11; i++){
+    for(int i = 0; i < 7; i++){
       flush[i] = new Card();
     }
     int diaCount = 0;
@@ -397,18 +386,28 @@ class Hand {
     } else {
       return false;
     }
-    
-    for(int ace = 0; ace < 7; ace++){
+// A A 2 3 4 5 9
+    for(int ace = 0; ace < 10; ace++){
       if(flush[ace].number == 14){
-        flush[0] = new Card(pics[0], 1, flush[ace].suit, 0);
-        for(int t = 0; t < 10; t++){
-          flush[11-t-1] = flush[11-t]; 
+        for(int t = 9; t >= 0; t--){
+          flush[t+1] = flush[t]; 
         }
+        flush[0] = new Card(pics[0], 1, flush[ace].suit, 0);
+        flush[0].number = 1;
+        flush[0].value = flush[ace].suit;
+        ace++;
       }
     }
-    
+    //for(int print = 0; print < 11; print++){
+    //  if(flush[print].sprite != null){
+    //    flush[print].goTo(print*70,500);
+    //    flush[print].show();
+    //    println(flush[print].number);
+    //  }
+    //}
     for(int d = 0; d < 2; d++){
       if (flush[d].number + 1 == flush[d+1].number && flush[d+1].number + 1 == flush[d+2].number && flush[d+2].number + 1 == flush[d+3].number && flush[d+3].number + 1 == flush[d+4].number){
+        println("flush if statement working");
         if (d <= 2) {
           for(int g = 0; g < 2; g++){
             if (flush[g].number + 1 == flush[g+1].number && flush[g+1].number + 1 == flush[g+2].number && flush[g+2].number + 1 == flush[g+3].number && flush[g+3].number + 1 == flush[g+4].number){ 

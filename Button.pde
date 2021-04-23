@@ -2,17 +2,21 @@ class Button{
   String text;
   float x;
   float y;
-  float l = 100;
-  float h = 25;
+  float l;
+  float h;
   public Button(){
     text = " ";
     x = 0;
     y = 0;
+    l = 0;
+    h = 0;
   }
-  public Button(String text, float x, float y){
+  public Button(String text, float x, float y, float l, float h){
     this.text = text;
     this.x = x;
     this.y = y;
+    this.l = l;
+    this.h = h;
   }
   public void show(){
     fill(255);
@@ -37,11 +41,11 @@ class Button{
   }
 }
 
-class CallButton extends Button{
-  public CallButton(){
-    super();
-  }
-  public CallButton(float x, float y){
-    super("Call", x, y);
-  }
-}
+//class CallButton extends Button{
+//  public CallButton(){
+//    super();
+//  }
+//  public CallButton(float x, float y){
+//    super("Call", x, y);
+//  }
+//}

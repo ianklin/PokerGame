@@ -51,6 +51,6 @@ class Deck {
   }
   public void reset(){
     b = 0;
-    //shuffle();
+    shuffle();
   }
 }
