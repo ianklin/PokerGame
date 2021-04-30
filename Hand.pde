@@ -3,6 +3,7 @@ class Hand {
   float x = 0;
   float y = 0;
   int value = 0;
+  int money = 0;
   Card[] mergedCards = new Card[7];
   public Hand(){
   }
@@ -186,59 +187,83 @@ class Hand {
       return false;
     }
   }
-  public boolean fullHouse(){
-    int tripleValue = 0;
-    Card[] fullHouseList = mergedCards.clone();
+  //public boolean fullHouse(){
+  //  int tripleValue = 0;
+  //  Card[] fullHouseList = mergedCards.clone();
     //for(int print = 0; print < 7; print++){
     //  println(fullHouseList[print].number);
     //}
-    if (threeOfKind()){
-      for (int b = 0; b < 5; b++){
-        if (fullHouseList[b].number == fullHouseList[b + 1].number && fullHouseList[b].number == fullHouseList[b + 2].number){
-          if (b <= 4){
-            for (int c = b + 3; c < 5; c++){
-              if (fullHouseList[c].number == fullHouseList[c + 1].number && fullHouseList[c].number == fullHouseList[c + 2].number){
-                tripleValue += fullHouseList[c].value;
-                tripleValue += fullHouseList[c + 1].value;
-                tripleValue += fullHouseList[c + 2].value;
-                fullHouseList[c] = new Card();
-                fullHouseList[c + 1] = new Card();
-                fullHouseList[c + 2] = new Card();
-                for(int pair = 0; pair < fullHouseList.length - 1; pair++){
-                  if(fullHouseList[pair].number == fullHouseList[pair + 1].number) {
-                    value = 10000000 + tripleValue + fullHouseList[pair].value + fullHouseList[pair + 1].value;
-                    return true;
-                  }
-                }
-              } 
-            }
-            tripleValue += fullHouseList[b].value;            
-            tripleValue += fullHouseList[b + 1].value;
-            tripleValue += fullHouseList[b + 2].value;
-            fullHouseList[b] = new Card();
-            fullHouseList[b + 1] = new Card();
-            fullHouseList[b + 2] = new Card();
-            break;
-          } else {
-            tripleValue += fullHouseList[b].value;            
-            tripleValue += fullHouseList[b + 1].value;
-            tripleValue += fullHouseList[b + 2].value;
-            fullHouseList[b] = new Card();
-            fullHouseList[b + 1] = new Card();
-            fullHouseList[b + 2] = new Card();
-            break;
-          }
-        }
-      }
-      for(int pair = 0; pair < fullHouseList.length - 1; pair++){
-        if(fullHouseList[pair].number == fullHouseList[pair + 1].number) {
-          value = 10000000 + tripleValue + fullHouseList[pair].value + fullHouseList[pair + 1].value;
-          return true;
-        }
+  //  if (threeOfKind()){
+  //    for (int b = 0; b < 5; b++){
+  //      if (fullHouseList[b].number == fullHouseList[b + 1].number && fullHouseList[b].number == fullHouseList[b + 2].number){
+  //        if (b <= 4){
+  //          for (int c = b + 3; c < 5; c++){
+  //            if (fullHouseList[c].number == fullHouseList[c + 1].number && fullHouseList[c].number == fullHouseList[c + 2].number){
+  //              tripleValue += fullHouseList[c].value;
+  //              tripleValue += fullHouseList[c + 1].value;
+  //              tripleValue += fullHouseList[c + 2].value;
+  //              fullHouseList[c] = new Card();
+  //              fullHouseList[c + 1] = new Card();
+  //              fullHouseList[c + 2] = new Card();
+  //              for(int pair = 0; pair < fullHouseList.length - 1; pair++){
+  //                if(fullHouseList[pair].number == fullHouseList[pair + 1].number) {
+  //                  value = 10000000 + tripleValue + fullHouseList[pair].value + fullHouseList[pair + 1].value;
+  //                  return true;
+  //                }
+  //              }
+  //            } 
+  //          }
+  //          tripleValue += fullHouseList[b].value;            
+  //          tripleValue += fullHouseList[b + 1].value;
+  //          tripleValue += fullHouseList[b + 2].value;
+  //          fullHouseList[b] = new Card();
+  //          fullHouseList[b + 1] = new Card();
+  //          fullHouseList[b + 2] = new Card();
+  //          break;
+  //        } else {
+  //          tripleValue += fullHouseList[b].value;            
+  //          tripleValue += fullHouseList[b + 1].value;
+  //          tripleValue += fullHouseList[b + 2].value;
+  //          fullHouseList[b] = new Card();
+  //          fullHouseList[b + 1] = new Card();
+  //          fullHouseList[b + 2] = new Card();
+  //          break;
+  //        }
+  //      }
+  //    }
+  //    for(int pair = 0; pair < fullHouseList.length - 1; pair++){
+  //      if(fullHouseList[pair].number == fullHouseList[pair + 1].number) {
+  //        value = 10000000 + tripleValue + fullHouseList[pair].value + fullHouseList[pair + 1].value;
+  //        return true;
+  //      }
+  //    }
+  //  }
+  //  return false;
+  //}
+  public boolean fullHouse(){
+    int tripleNumber = 0;
+    boolean triple = false; 
+    boolean pair = false;
+    int tripleHighest = 0;
+    for(int i = 0; i < 5; i++){
+      if(mergedCards[i].number == mergedCards[i+1].number && mergedCards[i+1].number == mergedCards[i+2].number){
+        tripleNumber = mergedCards[i].number;
+        triple = true;
+        tripleHighest = mergedCards[i+2].value;
       }
     }
-    return false;
-  }
+    for(int a = 0; a < 6; a++){
+      if(mergedCards[a].number == mergedCards[a+1].number && mergedCards[a].number != tripleNumber){
+        pair = true;
+      }
+    }
+    if(pair && triple){
+      value = 10000000 + tripleHighest;
+      return true;
+    } else {
+      return false;
+    }
+  }  
   public boolean fourOfAKind(){
     value = 0;
     Card[] mergedCards1 = mergedCards.clone();
@@ -337,7 +362,7 @@ class Hand {
   public boolean straightFlush(){
     Card[] flush = new Card[11];
     int index = 0;
-    for(int i = 0; i < 7; i++){
+    for(int i = 0; i < 11; i++){
       flush[i] = new Card();
     }
     int diaCount = 0;

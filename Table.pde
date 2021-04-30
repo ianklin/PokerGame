@@ -1,5 +1,7 @@
 class GameTable{
   Card[] cardArray = new Card[5];
+  int pot = 0;
+  int currentBet = 0;
   public GameTable(){
   }
    public void flop(Card c, Card d, Card e){

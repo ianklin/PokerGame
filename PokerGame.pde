@@ -17,9 +17,11 @@ Hand CPU1;
 Hand CPU2;
 Hand CPU3;
 GameTable table;
-Button call;
+Button addMoney;
 Button fold;
 Button replay;
+Button add10;
+Button add100;
 void setup(){
   size(800,800);
   String folderPath = sketchPath()+"/cards";
@@ -47,8 +49,10 @@ void setup(){
   CPU2 = new Hand();
   CPU3 = new Hand();
   table = new GameTable();
-  call = new Button("Call", 600, 700, 100, 25);
-  fold = new Button("Fold", 600, 730, 100, 25);
+  addMoney = new Button("Call", 550, 700, 100, 25);
+  add10 = new Button("Add $10", 660, 700, 100, 25);
+  add100 = new Button("Add $100", 660, 730, 100, 25);
+  fold = new Button("Fold", 550, 730, 100, 25);
   replay = new Button("Play Again", 350, 600, 150, 37);
   player1.goTo(330,700);
   CPU1.goTo(0,350);
@@ -86,6 +90,10 @@ void draw(){
       CPU2.getCards(a.passCard(), a.passCard());
       CPU3.getCards(a.passCard(), a.passCard());
       currentState = GameStates.OPTIONS;
+      CPU1.money -= 10;
+      CPU2.money -= 10;
+      CPU3.money -= 10;
+      table.pot += 30;
       break;
     case FLOP:
       table.flop(a.passCard(), a.passCard(), a.passCard());
@@ -94,14 +102,23 @@ void draw(){
       //Card card5 = new Card(pics[4], 5, 0, 16);
       //table.flop(card3, card4, card5);
       currentState = GameStates.OPTIONS;
+      table.currentBet += 10 * floor(random(0,11));
+      table.currentBet += 10 * floor(random(0,11));
+      table.currentBet += 10 * floor(random(0,11));
       break;
     case TURN:
       table.turn(a.passCard());
       currentState = GameStates.OPTIONS;
+      table.currentBet += 10 * floor(random(0,11));
+      table.currentBet += 10 * floor(random(0,11));
+      table.currentBet += 10 * floor(random(0,11));
       break;
     case RIVER:
       table.river(a.passCard());
       currentState = GameStates.OPTIONS;
+      table.currentBet += 10 * floor(random(0,11));
+      table.currentBet += 10 * floor(random(0,11));
+      table.currentBet += 10 * floor(random(0,11));
       break; 
     case RESULTS:
       player1.mergeCards(table.cardArray);
@@ -129,23 +146,21 @@ void draw(){
         currentState = GameStates.PASSCARDS;
       }
       textSize(32);
-      if(player1.value >= CPU1.value && player1.value >= CPU2.value && player1.value >= CPU3.value){
+      if(player1.value > CPU1.value && player1.value > CPU2.value && player1.value > CPU3.value){
         text("You Won!", 400, 220);
-      }
-      if(CPU1.value >= player1.value && CPU1.value >= CPU2.value && CPU1.value >= CPU3.value){
+      } else if(player1.value < CPU1.value || player1.value <  CPU2.value || player1.value < CPU3.value){
         text("You Lost!", 400, 220);
-      }
-      if(CPU2.value >= player1.value && CPU2.value >= CPU1.value && CPU2.value >= CPU3.value){
-        text("You Lost!", 400, 220);
-      }
-      if(CPU3.value >= player1.value && CPU3.value >= CPU1.value && CPU3.value >= CPU2.value){
-        text("You Lost!", 400, 220);
+      } else if (player1.value == CPU1.value || player1.value == CPU2.value || player1.value == CPU3.value){
+        text("Tie!", 400, 220);
       }
       break;
     case OPTIONS:
-      call.show();
+      add10.show();
+      add100.show();
+      addMoney.show();
       fold.show();
-      if (call.clicked()){
+      if (addMoney.clicked()){
+        
         if (stateNum == 0){
           currentState = GameStates.FLOP;
         }
@@ -161,7 +176,16 @@ void draw(){
         stateNum++;
       }
       if (fold.clicked()){
+        CPU1.money += table.pot/3;
+        CPU2.money += table.pot/3;
+        CPU3.money += table.pot/3;
         currentState = GameStates.PASSCARDS;
+      }
+      if(add10.clicked()){
+        table.currentBet += 10;
+      }
+      if(add100.clicked()){
+        table.currentBet += 100;
       }
       break;
   }
@@ -170,4 +194,6 @@ void draw(){
   CPU1.show();
   CPU2.show();
   CPU3.show();
+  text("Pot: $" + table.pot, 400, 500);
+  text("Current Bet: $" + table.currentBet, 400, 510);
 }
