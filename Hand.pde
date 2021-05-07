@@ -3,7 +3,7 @@ class Hand {
   float x = 0;
   float y = 0;
   int value = 0;
-  int money = 0;
+  int money = 5000;
   Card[] mergedCards = new Card[7];
   public Hand(){
   }
@@ -20,6 +20,12 @@ class Hand {
     cards[0].show();
     cards[1].goTo(x+73, y);
     cards[1].show();
+  }
+  public void showHidden(){
+    cards[0].goTo(x, y);
+    cards[0].showHidden();
+    cards[1].goTo(x+73, y);
+    cards[1].showHidden();
   }
   public void mergeCards(Card[] a){
     for (int i = 0; i < 5; i++){

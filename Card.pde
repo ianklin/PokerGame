@@ -23,6 +23,9 @@ class Card {
   public void show(){
     image(sprite, x, y);
   }
+  public void showHidden(){
+    image(hiddenCard, x, y);
+  }
   public void goTo(float x, float y){
     this.x = x;
     this.y = y;

@@ -25,5 +25,7 @@ class GameTable{
   }
   public void reset(){
     cardArray = new Card[5]; 
+    pot = 0;
+    currentBet = 0;
   }
 }

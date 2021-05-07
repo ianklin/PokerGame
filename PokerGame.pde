@@ -11,6 +11,7 @@ enum GameStates{
 int stateNum = 0;
 GameStates currentState = GameStates.PASSCARDS;
 PImage[] pics = new PImage[52];
+PImage hiddenCard;
 Deck a;
 Hand player1;
 Hand CPU1;
@@ -41,6 +42,7 @@ void setup(){
   for (int i = 0; i < 13; i++){
     pics[i+39] = spade.get(1 + i * 73, 0, 73, 96);
   }
+  hiddenCard = loadImage(folderPath + "/blueback.jpg");
   a = new Deck();
   a.shuffle();
   //a.revealDeck();
@@ -94,6 +96,9 @@ void draw(){
       CPU2.money -= 10;
       CPU3.money -= 10;
       table.pot += 30;
+      CPU1.showHidden();
+      CPU2.showHidden();
+      CPU3.showHidden();
       break;
     case FLOP:
       table.flop(a.passCard(), a.passCard(), a.passCard());
@@ -105,42 +110,42 @@ void draw(){
       table.currentBet += 10 * floor(random(0,11));
       table.currentBet += 10 * floor(random(0,11));
       table.currentBet += 10 * floor(random(0,11));
+      CPU1.showHidden();
+      CPU2.showHidden();
+      CPU3.showHidden();
       break;
     case TURN:
       table.turn(a.passCard());
       currentState = GameStates.OPTIONS;
+      table.currentBet = 0;
       table.currentBet += 10 * floor(random(0,11));
       table.currentBet += 10 * floor(random(0,11));
       table.currentBet += 10 * floor(random(0,11));
+      CPU1.showHidden();
+      CPU2.showHidden();
+      CPU3.showHidden();
       break;
     case RIVER:
       table.river(a.passCard());
+      table.currentBet = 0;
       currentState = GameStates.OPTIONS;
       table.currentBet += 10 * floor(random(0,11));
       table.currentBet += 10 * floor(random(0,11));
       table.currentBet += 10 * floor(random(0,11));
+      CPU1.showHidden();
+      CPU2.showHidden();
+      CPU3.showHidden();
       break; 
     case RESULTS:
-      player1.mergeCards(table.cardArray);
-      player1.sortCards();
-      CPU1.mergeCards(table.cardArray);
-      CPU1.sortCards();
-      CPU2.mergeCards(table.cardArray);
-      CPU2.sortCards();
-      CPU3.mergeCards(table.cardArray);
-      CPU3.sortCards();
+      table.currentBet = 0;
       //for (int k = 0; k < 7; k++){
       //  player1.mergedCards[k].goTo(k*70,600);
       //  player1.mergedCards[k].show();
       //}
-      player1.determineValue();
-      CPU1.determineValue();
-      CPU2.determineValue();
-      CPU3.determineValue();
-      text(player1.value, 200, 200);
-      text(CPU1.value, 200, 210);
-      text(CPU2.value, 200, 220);
-      text(CPU3.value, 200, 230);
+      //text(player1.value, 200, 200);
+      //text(CPU1.value, 200, 210);
+      //text(CPU2.value, 200, 220);
+      //text(CPU3.value, 200, 230);
       replay.show();
       if (replay.clicked()){
         currentState = GameStates.PASSCARDS;
@@ -153,14 +158,28 @@ void draw(){
       } else if (player1.value == CPU1.value || player1.value == CPU2.value || player1.value == CPU3.value){
         text("Tie!", 400, 220);
       }
+      CPU1.show();
+      CPU2.show();
+      CPU3.show();
+      if(player1.money <= 0){
+        text("No more money!", 400, 500);
+        noLoop();
+      }
       break;
     case OPTIONS:
       add10.show();
       add100.show();
       addMoney.show();
       fold.show();
+      text("Pot: $" + table.pot, 400, 500);
+      text("Current Bet: $" + table.currentBet, 400, 510);
+      text("Money: $" + player1.money, 750, 780);
       if (addMoney.clicked()){
-        
+        player1.money -= table.currentBet;
+        CPU1.money -= table.currentBet;
+        CPU2.money -= table.currentBet;
+        CPU3.money -= table.currentBet;
+        table.pot += table.currentBet * 4;
         if (stateNum == 0){
           currentState = GameStates.FLOP;
         }
@@ -171,14 +190,28 @@ void draw(){
           currentState = GameStates.RIVER;
         }
         if (stateNum == 3){
+          player1.mergeCards(table.cardArray);
+          player1.sortCards();
+          CPU1.mergeCards(table.cardArray);
+          CPU1.sortCards();
+          CPU2.mergeCards(table.cardArray);
+          CPU2.sortCards();
+          CPU3.mergeCards(table.cardArray);
+          CPU3.sortCards();
+          player1.determineValue();
+          CPU1.determineValue();
+          CPU2.determineValue();
+          CPU3.determineValue();
+          if(player1.value > CPU1.value && player1.value > CPU2.value && player1.value > CPU3.value){
+            player1.money += table.pot;
+          } else if (player1.value == CPU1.value || player1.value == CPU2.value || player1.value == CPU3.value){
+            player1.money += table.pot/4;
+          }
           currentState = GameStates.RESULTS;
         }
         stateNum++;
       }
       if (fold.clicked()){
-        CPU1.money += table.pot/3;
-        CPU2.money += table.pot/3;
-        CPU3.money += table.pot/3;
         currentState = GameStates.PASSCARDS;
       }
       if(add10.clicked()){
@@ -187,13 +220,11 @@ void draw(){
       if(add100.clicked()){
         table.currentBet += 100;
       }
+      CPU1.showHidden();
+      CPU2.showHidden();
+      CPU3.showHidden();
       break;
   }
   table.displayAll();
   player1.show();
-  CPU1.show();
-  CPU2.show();
-  CPU3.show();
-  text("Pot: $" + table.pot, 400, 500);
-  text("Current Bet: $" + table.currentBet, 400, 510);
 }
